@@ -1,66 +1,212 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API Laravel Public
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API RESTful simples para gerenciamento de clientes, construída com Laravel.
 
-## About Laravel
+## 📋 Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Gerenciamento completo de clientes (CRUD)
+- Paginação de resultados
+- Respostas em formato JSON
+- Validação de dados de entrada
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Tecnologias
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **PHP 8.2+** - Linguagem de programação
+- **Laravel 11** - Framework PHP moderno
+- **MySQL** - Banco de dados relacional
+- **Docker** - Conteinerização via Laravel Sail
+- **Composer** - Gerenciador de dependências PHP
 
-## Learning Laravel
+## 📦 Instalação e Configuração
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+# Clone o repositório
+git clone https://github.com/ItamarJuniorDEV/api-public-laravel.git
+cd api-public-laravel
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# Configure o ambiente com Laravel Sail (Docker)
+cp .env.example .env
+composer install
+php artisan key:generate
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Inicie os contêineres Docker
+./vendor/bin/sail up -d
 
-## Laravel Sponsors
+# Execute as migrações
+./vendor/bin/sail artisan migrate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🔄 Endpoints
 
-### Premium Partners
+| Método   | Endpoint                  | Descrição                          |
+|----------|---------------------------|------------------------------------|
+| `GET`    | `/api/status`             | Verifica status da API             |
+| `GET`    | `/api/clients`            | Lista todos os clientes (paginado) |
+| `GET`    | `/api/clients/{id}`       | Busca cliente por ID               |
+| `POST`   | `/api/clients/search`     | Busca cliente por ID via body      |
+| `POST`   | `/api/clients`            | Cria um novo cliente               |
+| `PUT`    | `/api/clients/{id}`       | Atualiza dados de um cliente       |
+| `DELETE` | `/api/clients/{id}`       | Exclui um cliente pelo ID          |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## 📦 Exemplos de Requisições
 
-## Contributing
+### Verificar status da API
+```bash
+GET /api/status
+```
+**Resposta:**
+```json
+{
+  "status": "ok",
+  "message": "A API está rodando"
+}
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Listar clientes
+```bash
+GET /api/clients
+```
+**Resposta:**
+```json
+{
+  "status": "ok",
+  "message": "Clientes obtidos com sucesso",
+  "data": {
+    "current_page": 1,
+    "data": [...],
+    "total": 50
+  }
+}
+```
 
-## Code of Conduct
+### Buscar cliente por ID (via path)
+```bash
+GET /api/clients/101
+```
+**Resposta:**
+```json
+{
+  "status": "ok",
+  "message": "Cliente encontrado com sucesso",
+  "data": {
+    "id": 101,
+    "name": "Itamar Junior",
+    "email": "junior@gmail.com",
+    "created_at": "2025-03-15T21:59:05.000000Z",
+    "updated_at": "2025-03-15T21:59:05.000000Z"
+  }
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Buscar cliente por ID (via body)
+```bash
+POST /api/clients/search
+Content-Type: application/json
 
-## Security Vulnerabilities
+{
+  "id": 101
+}
+```
+**Resposta:**
+```json
+{
+  "status": "ok",
+  "message": "Cliente recuperado com sucesso",
+  "data": {
+    "id": 101,
+    "name": "Itamar Junior",
+    "email": "junior@gmail.com",
+    "created_at": "2025-03-15T21:59:05.000000Z",
+    "updated_at": "2025-03-15T21:59:05.000000Z"
+  }
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Criar um cliente
+```bash
+POST /api/clients
+Content-Type: application/json
 
-## License
+{
+  "name": "Itamar Junior",
+  "email": "junior@gmail.com"
+}
+```
+**Resposta:**
+```json
+{
+  "status": "ok",
+  "message": "Cliente criado com sucesso",
+  "data": {
+    "id": 101,
+    "name": "Itamar Junior",
+    "email": "junior@gmail.com",
+    "created_at": "2025-03-15T22:32:45.000000Z",
+    "updated_at": "2025-03-15T22:32:45.000000Z"
+  }
+}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Atualizar um cliente
+```bash
+PUT /api/clients/101
+Content-Type: application/json
+
+{
+  "name": "Nome Atualizado",
+  "email": "email.atualizado@exemplo.com"
+}
+```
+**Resposta:**
+```json
+{
+  "status": "ok",
+  "message": "O cliente foi atualizado",
+  "data": {
+    "id": 101,
+    "name": "Nome Atualizado",
+    "email": "email.atualizado@exemplo.com",
+    "created_at": "2025-03-15T21:59:05.000000Z",
+    "updated_at": "2025-03-15T22:35:10.000000Z"
+  }
+}
+```
+
+### Remover um cliente
+```bash
+DELETE /api/clients/101
+```
+**Resposta:**
+```json
+{
+  "status": "ok",
+  "message": "O cliente foi deletado"
+}
+```
+
+## 💾 Modelos de Dados
+
+### Cliente
+
+| Campo      | Tipo     | Descrição                            |
+|------------|---------|------------------------------------|
+| `id`       | Integer | Identificador único               |
+| `name`     | String  | Nome do cliente                   |
+| `email`    | String  | Email do cliente (único)          |
+| `created_at` | DateTime | Data de criação                 |
+| `updated_at` | DateTime | Data da última atualização       |
+
+## 🧪 Testes
+
+```bash
+# Execute os testes
+./vendor/bin/sail artisan test
+```
+
+## 👨‍💻 Autor
+
+Itamar Junior
+
+## 📝 Licença
+
+Este projeto está licenciado sob a licença MIT.
