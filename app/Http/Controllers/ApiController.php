@@ -24,7 +24,7 @@ class ApiController extends Controller
         return response()->json(
             [
                 'status' => 'ok',
-                'message' => 'Sucesso',
+                'message' => 'Clientes obtidos com sucesso',
                 'data' => $clients
             ],
             200
@@ -37,7 +37,7 @@ class ApiController extends Controller
         return response()->json(
             [
                 'status' => 'ok',
-                'message' => 'Sucesso',
+                'message' => 'Cliente encontrado com sucesso',
                 'data' => $client
             ],
             200
@@ -51,7 +51,7 @@ class ApiController extends Controller
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => 'Client ID is required',
+                    'message' => 'O ID do cliente é obrigatório',
                 ],
                 400
             );
@@ -62,7 +62,7 @@ class ApiController extends Controller
         return response()->json(
             [
                 'status' => 'ok',
-                'message' => 'Sucesso',
+                'message' => 'Cliente recuperado com sucesso',
                 'data' => $client
             ],
             200
@@ -80,7 +80,7 @@ class ApiController extends Controller
         return response()->json(
             [
                 'status' => 'ok',
-                'message' => 'Sucesso',
+                'message' => 'Cliente criado com sucesso',
                 'data' => $client
             ],
             200
@@ -93,7 +93,7 @@ class ApiController extends Controller
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => 'Client ID is required',
+                    'message' => 'O ID do cliente é obrigatório',
                 ],
                 400
             );
@@ -108,8 +108,24 @@ class ApiController extends Controller
         return response()->json(
             [
                 'status' => 'ok',
-                'message' => 'Sucesso',
+                'message' => 'O Cliente foi atualizado',
                 'data' => $client
+            ],
+            200
+        );
+    }
+
+    public function deleteClient($id)
+    {
+        // get client data by id
+        $client = Client::find($id);
+        // delete client
+        $client->delete();
+
+        return response()->json(
+            [
+                'status' => 'ok',
+                'message' => 'O cliente foi deletado',
             ],
             200
         );
